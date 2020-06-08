@@ -7,8 +7,6 @@ name: CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,29 +22,29 @@ jobs:
       
     - name: Setup Node.js environment
       uses: actions/setup-node@v1.4.2
-       with: 
+      with: 
          version: 12
-     - name: GitHub Action for Yarn
-       uses: Borales/actions-yarn@v2.3.0
-       with:
+    - name: GitHub Action for Yarn
+      uses: Borales/actions-yarn@v2-beta
+      with:
           # Yarn command
           cmd: install # npm install/ yarn install
         
-      - name: Creating build 
-        run:  yarn build
+    - name: Creating build 
+      run: yarn build
         
-      - name: installing surge
-        run: npm install -g surge
+    - name: installing surge
+      run: npm install -g surge
         
-      - name: deploying on surge  
-        run: surge ./build http://bootcamp2020-app.surge.sh/ --token${{secrets.SURGE_TOKEN}}
-          # Set always-auth in npmrc
-          always-auth: # optional, default is false
-          # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
-          node-version: # optional, default is 10.x
-          # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
-          registry-url: # optional
-          # Optional scope for authenticating against scoped registries
-          scope: # optional
-          # Deprecated. Use node-version instead. Will not be supported after October 1, 2019
-          version: # optional
+    - name: deploying on surge  
+      run: surge ./build http://bootcamp2020-app.surge.sh/ --token${{secrets.SURGE_TOKEN}}
+        # Set always-auth in npmrc
+       always-auth: # optional, default is false
+        # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
+        node-version: # optional, default is 10.x
+        # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
+        registry-url: # optional
+        # Optional scope for authenticating against scoped registries
+        scope: # optional
+        # Deprecated. Use node-version instead. Will not be supported after October 1, 2019
+        version: # optional
